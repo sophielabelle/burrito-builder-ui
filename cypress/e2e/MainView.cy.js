@@ -11,7 +11,7 @@ describe('Main page', () => {
     cy.visit("http://localhost:3000/")
   })
 
-  it.skip('Should display a form, existing orders and a Header', () => {
+  it('Should display a form, existing orders and a Header', () => {
     cy.get('form')
     cy.get(':nth-child(1) > h3').contains('Pat')
     cy.get(':nth-child(1) > .ingredient-list > :nth-child(1)').contains('beans')
@@ -22,7 +22,7 @@ describe('Main page', () => {
     cy.get('h1').contains('Burrito Builder')
   })
 
-  it.skip('Should allow a user to make a new order with their name and selected toppings and submit it then see it displayed with the other orders', () => {
+  it('Should allow a user to make a new order with their name and selected toppings and submit it then see it displayed with the other orders', () => {
     cy.intercept('POST', 'http://localhost:3001/api/v1/orders', {
       fixture: "newOrder.json"
     })
@@ -42,9 +42,15 @@ describe('Main page', () => {
   })
 
   it('Should show a error message when user tries to submit the new order with missing feilds', () => {
-    cy.get(':nth-child(15)').click()
+    cy.get('.submit-btn').click()
+    cy.get('.error-msg').contains('Please add your name and select ingredients')
     cy.get('input').type('sara')
-    cy.get(':nth-child(15)').click()
+    cy.get('.submit-btn').click()
+    cy.get('.error-msg').contains('Please select ingredients for your burrito!')
+    cy.get('input').clear()
+    cy.get('[name="queso fresco"]').click()
+    cy.get('.submit-btn').click()
+    cy.get('.error-msg').contains('Please add your name!')
   })
 
 })

@@ -50,6 +50,8 @@ export const OrderForm = ({addNew}) => {
 
   return (
     <form>
+       {feildError && <p className='error-msg'>{feildError}</p>}
+       
       <input
         type='text'
         placeholder='Name'
@@ -62,8 +64,7 @@ export const OrderForm = ({addNew}) => {
       { ingredientButtons }
 
       <p>Order: { displayIngreds || 'Nothing selected' }</p>
-      {feildError && <p>{feildError}</p>}
-      <button onClick={(e) => handleSubmit(e)}>
+      <button className="submit-btn" onClick={(e) => handleSubmit(e)}>
         Submit Order
       </button>
     </form>
