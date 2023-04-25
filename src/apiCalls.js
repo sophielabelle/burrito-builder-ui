@@ -2,7 +2,7 @@ export const getOrders = () => {
   return fetch('http://localhost:3001/api/v1/orders')
     .then(res => {
       if(res.ok) {
-        res.json()
+        return res.json()
       } else {
         throw new Error(res.status)
       }
