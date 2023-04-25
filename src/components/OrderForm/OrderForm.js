@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { postOrders } from '../../apiCalls';
 
-export const OrderForm = ({setOrders, addNew}) => {
+export const OrderForm = ({addNew}) => {
   const [name, setName] = useState('')
+  const [feildError, setFeildError] = useState('')
   const [ingredients, setIngredients] = useState([])
   const possibleIngredients = ['beans', 'steak', 'carnitas', 'sofritas', 'lettuce', 'queso fresco', 'pico de gallo', 'hot sauce', 'guacamole', 'jalapenos', 'cilantro', 'sour cream'];
 
@@ -12,14 +13,20 @@ export const OrderForm = ({setOrders, addNew}) => {
   }, '')
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     if(name.length && ingredients.length) {
-      e.preventDefault();
       const newOrder = {
         name: name,
         ingredients: ingredients
       }
       addNew(newOrder)
       clearInputs();
+    } else if(!name.length && ingredients.length) {
+      setFeildError('Please add your name!')
+    } else if(name.length && !ingredients.length) {
+      setFeildError('Please select ingredients for your burrito!')
+    } else {
+      setFeildError('Please add your name and select ingredients')
     }
   }
   
@@ -55,7 +62,7 @@ export const OrderForm = ({setOrders, addNew}) => {
       { ingredientButtons }
 
       <p>Order: { displayIngreds || 'Nothing selected' }</p>
-
+      {feildError && <p>{feildError}</p>}
       <button onClick={(e) => handleSubmit(e)}>
         Submit Order
       </button>
