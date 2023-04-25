@@ -16,6 +16,14 @@ export const App = () => {
       .catch(err => console.error('Error fetching:', err));
   }
 
+  const addNewOrder = (newOrder) => {
+    postOrders(newOrder)
+      .then(data => {
+        setOrders([...orders, data])
+      })
+
+  }
+
   useEffect(() => {
     getAllOrders();
   }, [])
@@ -24,7 +32,7 @@ export const App = () => {
     <main className="App">
       <header>
         <h1>Burrito Builder</h1>
-        <OrderForm setOrders={setOrders}/>
+        <OrderForm setOrders={setOrders} addNew={addNewOrder} />
       </header>
 
       <Orders orders={orders}/>

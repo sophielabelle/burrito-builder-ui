@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { OrderCard } from '../orderCard/orderCard';
 import './Orders.css';
 
 export const Orders = ({orders}) => {
-  const orderEls = orders.map(order => <OrderCard key={order.name+order.id} order={order}/>);
+  const display = orders.length ? orders.map(order => <OrderCard key={order.name+order.id} order={order}/>) : <p>No orders yet!</p>
+
+  useEffect(() => {
+    
+  }, [])
 
   return (
     <section>
-      { orderEls.length ? orderEls : <p>No orders yet!</p> }
+      { display }
     </section>
   )
 }

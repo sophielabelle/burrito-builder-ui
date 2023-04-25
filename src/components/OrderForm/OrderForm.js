@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { postOrders } from '../../apiCalls';
 
-export const OrderForm = ({setOrders}) => {
+export const OrderForm = ({setOrders, addNew}) => {
   const [name, setName] = useState('')
   const [ingredients, setIngredients] = useState([])
   const possibleIngredients = ['beans', 'steak', 'carnitas', 'sofritas', 'lettuce', 'queso fresco', 'pico de gallo', 'hot sauce', 'guacamole', 'jalapenos', 'cilantro', 'sour cream'];
-  console.log('selected Ingred', ingredients);
 
   const displayIngreds = ingredients.reduce((acc, i) => {
     acc += ` ${i},`
@@ -13,15 +12,15 @@ export const OrderForm = ({setOrders}) => {
   }, '')
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const newOrder = {
-      name: name,
-      ingredients: ingredients
+    if(name.length && ingredients.length) {
+      e.preventDefault();
+      const newOrder = {
+        name: name,
+        ingredients: ingredients
+      }
+      addNew(newOrder)
+      clearInputs();
     }
-    console.log('newOrder',newOrder)
-    postOrders(newOrder)
-      .then(data => setOrders(data))
-    clearInputs();
   }
   
   const clearInputs = () => {
@@ -50,6 +49,7 @@ export const OrderForm = ({setOrders}) => {
         name='name'
         value={name}
         onChange={e => setName(e.target.value)}
+        required
       />
 
       { ingredientButtons }
