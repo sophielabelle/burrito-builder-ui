@@ -8,7 +8,7 @@ export const OrderForm = ({setOrders}) => {
   console.log('selected Ingred', ingredients);
 
   const displayIngreds = ingredients.reduce((acc, i) => {
-    acc += `${i},`
+    acc += ` ${i},`
     return acc
   }, '')
 
@@ -20,7 +20,7 @@ export const OrderForm = ({setOrders}) => {
     }
     console.log('newOrder',newOrder)
     postOrders(newOrder)
-      .then(data => console.log(data))
+      .then(data => setOrders(data))
     clearInputs();
   }
   

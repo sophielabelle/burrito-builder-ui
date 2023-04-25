@@ -3,7 +3,7 @@ import { OrderCard } from '../orderCard/orderCard';
 import './Orders.css';
 
 export const Orders = ({orders}) => {
-  const orderEls = orders.map(order => <OrderCard key={order.name} order={order}/>);
+  const orderEls = orders.map(order => <OrderCard key={order.name+order.id} order={order}/>);
 
   return (
     <section>
